@@ -5,7 +5,7 @@ My notes while reading "[Writing A Compiler In Go][book]" book by Thorsten Ball
 ## TOC
 
 - [x] Introduction
-- [ ] Chapter 1: Compilers & Virtual Machines
+- [x] Chapter 1: Compilers & Virtual Machines
 - [ ] Chapter 2: Hello Bytecode!
 - [ ] Chapter 3: Compiling Expressions
 - [ ] Chapter 4: Conditionals
