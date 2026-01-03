@@ -18,8 +18,8 @@ func (ins Instructions) String() string {
 }
 
 type Definition struct {
-	Name         string
-	OperandWidth []int
+	Name          string
+	OperandWidths []int
 }
 
 var definitions = map[Opcode]*Definition{
@@ -42,7 +42,7 @@ func Make(op Opcode, operands ...int) []byte {
 	}
 
 	instructionLen := 1
-	for _, w := range def.OperandWidth {
+	for _, w := range def.OperandWidths {
 		instructionLen += w
 	}
 
@@ -51,7 +51,7 @@ func Make(op Opcode, operands ...int) []byte {
 
 	offset := 1
 	for i, operand := range operands {
-		width := def.OperandWidth[i]
+		width := def.OperandWidths[i]
 		switch width {
 		case 2:
 			// todo: implement my own big-endian conversion
@@ -61,4 +61,25 @@ func Make(op Opcode, operands ...int) []byte {
 	}
 
 	return instruction
+}
+
+func ReadOperands(def *Definition, ins Instructions) ([]int, int) {
+	operands := make([]int, len(def.OperandWidths))
+	offset := 0
+
+	for i, width := range def.OperandWidths {
+		switch width {
+		case 2:
+			operands[i] = int(ReadUint16(ins[offset:]))
+		}
+
+		offset += width
+	}
+
+	return operands, offset
+}
+
+func ReadUint16(ins Instructions) uint16 {
+	// todo: implement my own version
+	return binary.BigEndian.Uint16(ins)
 }
