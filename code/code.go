@@ -50,6 +50,7 @@ func Make(op Opcode, operands ...int) []byte {
 		width := def.OperandWidth[i]
 		switch width {
 		case 2:
+			// todo: implement my own big-endian conversion
 			binary.BigEndian.PutUint16(instruction[offset:], uint16(operand))
 		}
 		offset += width
