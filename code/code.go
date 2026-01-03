@@ -5,13 +5,17 @@ import (
 	"fmt"
 )
 
-type Instructions []byte
-
 type Opcode byte
 
 const (
 	OpConstant Opcode = iota
 )
+
+type Instructions []byte
+
+func (ins Instructions) String() string {
+	return ""
+}
 
 type Definition struct {
 	Name         string
