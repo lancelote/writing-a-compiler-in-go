@@ -86,8 +86,7 @@ func Make(op Opcode, operands ...int) []byte {
 		width := def.OperandWidths[i]
 		switch width {
 		case 2:
-			// todo: implement my own big-endian conversion
-			binary.BigEndian.PutUint16(instruction[offset:], uint16(operand))
+			WriteUint16(instruction[offset:], uint16(operand))
 		}
 		offset += width
 	}
@@ -109,6 +108,14 @@ func ReadOperands(def *Definition, ins Instructions) ([]int, int) {
 	}
 
 	return operands, offset
+}
+
+func WriteUint16(s []byte, num uint16) {
+	highByte := byte(num >> 8)
+	lowByte := byte(num)
+
+	s[0] = highByte
+	s[1] = lowByte
 }
 
 func ReadUint16(ins Instructions) uint16 {

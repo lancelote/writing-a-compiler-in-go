@@ -1,6 +1,7 @@
 package code
 
 import (
+	"github.com/lancelote/simple-cmp/cmp"
 	"testing"
 )
 
@@ -76,6 +77,24 @@ func TestReadOperands(t *testing.T) {
 			if operandsRead[i] != want {
 				t.Errorf("unexpected operand. want=%d, got=%d", want, operandsRead[i])
 			}
+		}
+	}
+}
+
+func TestWriteUint16(t *testing.T) {
+	tests := []struct {
+		s    []byte
+		num  uint16
+		want []byte
+	}{
+		{make([]byte, 2), 65534, []byte{0xff, 0xfe}},
+	}
+
+	for _, tt := range tests {
+		WriteUint16(tt.s, tt.num)
+
+		if diff := cmp.Diff(tt.want, tt.s); diff != "" {
+			t.Error(diff)
 		}
 	}
 }
