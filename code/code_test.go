@@ -98,3 +98,19 @@ func TestWriteUint16(t *testing.T) {
 		}
 	}
 }
+
+func TestReadUnit16(t *testing.T) {
+	tests := []struct {
+		ins  []byte
+		want uint16
+	}{
+		{[]byte{0xff, 0xfe}, 65534},
+	}
+
+	for _, tt := range tests {
+		got := ReadUint16(tt.ins)
+		if tt.want != got {
+			t.Errorf("want %d, got %d", tt.want, got)
+		}
+	}
+}

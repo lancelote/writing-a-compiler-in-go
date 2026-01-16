@@ -2,7 +2,6 @@ package code
 
 import (
 	"bytes"
-	"encoding/binary"
 	"fmt"
 )
 
@@ -119,6 +118,8 @@ func WriteUint16(s []byte, num uint16) {
 }
 
 func ReadUint16(ins Instructions) uint16 {
-	// todo: implement my own version
-	return binary.BigEndian.Uint16(ins)
+	highByte := ins[0]
+	lowByte := ins[1]
+
+	return uint16(highByte)<<8 + uint16(lowByte)
 }
